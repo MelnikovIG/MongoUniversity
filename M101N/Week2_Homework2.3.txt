@@ -1,0 +1,22 @@
+    1) User class definition
+    
+    public class User
+    {
+        public ObjectId Id { get; set; }
+        public string Name { get; set; }
+        public string Email { get; set; }
+    }
+    
+    2) Account/Register
+   
+    await blogContext.Users.InsertOneAsync(new User()
+    {
+        Name = model.Name,
+        Email = model.Email
+    });
+   
+   3) Account/Login
+   
+   var user = await blogContext.Users.Find(x => x.Email == model.Email).Limit(1).FirstOrDefaultAsync();
+   
+   
