@@ -1,13 +1,14 @@
 //cleanup database using cursor
-var last = null;
+var lastStudentId = null;
 db.grades.find({type:"homework"}).sort({student_id:1, score:1}).forEach(
  function(current) {
 	 
-		if(last == null || current._id != last._id){
+		if(lastStudentId == null || current.student_id != lastStudentId){
+			
+			lastStudentId = current.student_id;
+			
 			print( "deleting: " + current._id); 
 			db.grades.remove({_id :current._id})
-		}
-
-		last = current;	
+		}	
 	 } 
 );
