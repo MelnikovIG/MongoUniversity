@@ -1,0 +1,11 @@
+//restore database
+mongorestore --drop -d video -c movieDetails movieDetails.bson
+
+//switch database
+use video
+
+//check data imported
+db.movieDetails.find().count()
+
+//get movieDetails
+db.movieDetails.find({year:2013, rated:"PG-13", "awards.wins":0}).pretty()
