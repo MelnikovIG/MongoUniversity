@@ -1,1 +1,31 @@
+//Set lowest homework score to null
+db.students.find().forEach(
+	function(current) {
+		var minHomeworkScore = Number.MAX_VALUE;
+		var minHomeworkIdx = -1;
+		
+		for(var i = 0; i < current.scores.length; i++){
+			var scoreItem = current.scores[i];
+			if(scoreItem.type != "homework"){
+				continue;
+			}
 
+			if(scoreItem.score < minHomeworkScore){
+				minHomeworkScore = scoreItem.score;
+				minHomeworkIdx = i;
+			}
+		}
+
+		if(minHomeworkIdx >= 0){
+			print( "student_id: " + current._id + " minScore: " + minHomeworkScore + " minScoreId: " + minHomeworkIdx);
+			
+			var unsetObj = { };
+			unsetObj["scores."+ minHomeworkIdx] = 1;
+			
+			db.students.update({"_id" : current._id}, {$unset : unsetObj});
+		}
+	} 
+);
+
+//Remove null homework scores
+db.students.updateMany({}, {$pull : {"scores" : null}})
