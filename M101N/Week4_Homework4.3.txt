@@ -1,0 +1,5 @@
+//add index for posts list
+db.posts.createIndex({"CreatedAtUtc":1})
+
+//add index for search by tag
+db.posts.createIndex({"Tags":1, "CreatedAtUtc":1})
