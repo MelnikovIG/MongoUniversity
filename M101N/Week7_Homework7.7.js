@@ -15,6 +15,5 @@ db.images.find().forEach(
 			print( "current: " + current._id + " NO ALBUM");
 			db.images.deleteOne({"_id":current._id})
 		}
-
 	}
 )
